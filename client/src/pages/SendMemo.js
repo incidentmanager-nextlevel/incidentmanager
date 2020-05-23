@@ -51,7 +51,6 @@ export default function SendMemo() {
   }
 
   async function handleSubmit() {
-    console.log(emailContent);
     const response = await SendMail("/api/sendmemo", emailContent);
     console.log("response", response);
     if (response.status === 200) {
@@ -59,6 +58,7 @@ export default function SendMemo() {
     }
     if (response.status !== 200) {
       setSuccess(false);
+      console.error("Response statusText:", response.statusText);
     }
   }
 

@@ -17,7 +17,7 @@ import useFetch from "../hooks/useFetch";
 export default function IssueList() {
   // const location = useLocation();
   const [issues, setIssues] = React.useState(false);
-  const [openTasks, setOpenTasks] = React.useState(false);
+  const [openTasks, setOpenTasks] = React.useState();
   const fetchedIssues = useFetch("/api/issues");
   const fetchedTasks = useFetch("/api/tasks");
 
