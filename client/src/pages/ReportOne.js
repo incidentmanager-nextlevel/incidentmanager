@@ -35,18 +35,23 @@ export default function ReportOne() {
   sessionStorage.clear();
   const location = useLocation();
   const [type, setType] = useSessionStorage("type");
-  let [isChecked, setIsChecked] = React.useState();
+  const [typeStored, setTypeStored] = useSessionStorage("type");
+  let [isChecked, setIsChecked] = React.useState(false);
 
-  let typeStored = sessionStorage.getItem("type");
+  // let typeStored = sessionStorage.getItem("type");
 
   function onChangeHandler(event, id) {
     setType(event.target.value);
     id === event.target.value
       ? setIsChecked((isChecked = false))
       : setIsChecked((isChecked = true));
-    console.log(typeStored);
-    console.log(isChecked);
   }
+
+  React.useEffect(() => {
+    const data = sessionStorage.getItem("type");
+    setTypeStored(data);
+  }, [type]);
+
   return (
     <>
       <H2>Type of incident</H2>
@@ -62,7 +67,7 @@ export default function ReportOne() {
             value="accident"
             onClick={onChangeHandler}
             isChecked
-            typeStored
+            typeStored={typeStored}
           />
           <Radio
             svg={<Demonstration />}
@@ -72,7 +77,7 @@ export default function ReportOne() {
             value="demonstration"
             onClick={onChangeHandler}
             isChecked
-            typeStored
+            typeStored={typeStored}
           />
           <Radio
             svg={<Fire />}
@@ -82,7 +87,7 @@ export default function ReportOne() {
             value="fire"
             onClick={onChangeHandler}
             isChecked
-            typeStored
+            typeStored={typeStored}
           />
         </FieldGroup>
         <FieldGroup>
@@ -94,7 +99,7 @@ export default function ReportOne() {
             value="spillage"
             onClick={onChangeHandler}
             isChecked
-            typeStored
+            typeStored={typeStored}
           />
           <Radio
             svg={<Weather />}
@@ -104,7 +109,7 @@ export default function ReportOne() {
             value="weather"
             onClick={onChangeHandler}
             isChecked
-            typeStored
+            typeStored={typeStored}
           />
           <Radio
             svg={<Strike />}
@@ -114,7 +119,7 @@ export default function ReportOne() {
             value="strike"
             onClick={onChangeHandler}
             isChecked
-            typeStored
+            typeStored={typeStored}
           />
         </FieldGroup>
         <FieldGroup>
@@ -126,7 +131,7 @@ export default function ReportOne() {
             value="theft"
             onClick={onChangeHandler}
             isChecked
-            typeStored
+            typeStored={typeStored}
           />
         </FieldGroup>
       </BiggerField>
