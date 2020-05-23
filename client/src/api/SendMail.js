@@ -1,4 +1,4 @@
-export async function SendMail(url, data, setSuccess) {
+export async function SendMail(url, data) {
   const response = await fetch(url, {
     method: "POST",
     headers: {
@@ -6,7 +6,6 @@ export async function SendMail(url, data, setSuccess) {
     },
     body: JSON.stringify(data)
   });
-  if (response.status !== 200) {
-    setSuccess(false);
-  }
+
+  return response;
 }
