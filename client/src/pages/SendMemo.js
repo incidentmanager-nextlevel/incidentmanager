@@ -22,6 +22,11 @@ const TextArea = styled.div`
 export default function SendMemo() {
   // const location = useLocation();
   const [issue, setIssue] = React.useState(false);
+  const [emailContent, setEmailContent] = React.useState({
+    headline: "",
+    memo: "",
+    emailAddresses: "loreirei@web.de"
+  });
   // const [error, setError] = React.useState(false);
   // const [loading, setLoading] = React.useState(true);
   const response = useFetch("/api/lastissue");
@@ -29,6 +34,29 @@ export default function SendMemo() {
   React.useEffect(() => {
     setIssue(response.data);
   }, [response]);
+
+  function handleChange(event) {
+    const value = event.target.value;
+    setEmailContent({
+      ...emailContent,
+      [event.target.name]: value
+    });
+  }
+
+  function handleSubmit() {
+    console.log(emailContent);
+  }
+
+  function setContentOnLoad(replacedMemo, headline) {
+    if (emailContent.memo === "") {
+      setEmailContent({
+        ...emailContent,
+        memo: replacedMemo,
+        headline: headline
+      });
+    }
+  }
+  // console.log(emailContent);
 
   if (!issue) return "Loading...";
   if (response.status !== 200) {
@@ -48,19 +76,25 @@ export default function SendMemo() {
             city={currentIssue.city}
             timeDate={currentIssue.timeDate}
             crisisPotential={currentIssue.crisisPotential}
+            handleChange={handleChange}
+            setContentOnLoad={setContentOnLoad}
           ></CreateMemo>
           <h4>Email recipient</h4>
           <H2>Add email address comma separated</H2>
-          <MemoInputEmail name="recipient">manuel-dev@web.de</MemoInputEmail>
+          <MemoInputEmail
+            value={emailContent.emailAddresses}
+            name="emailAddresses"
+            onChange={handleChange}
+          ></MemoInputEmail>
         </TextArea>
 
         <Aside>
-          <Link to="/tasks">
+          <a onClick={handleSubmit}>
             <SvgTextFooterButton
               svg={<Next />}
               text="Send internal memo and show tasks"
             ></SvgTextFooterButton>
-          </Link>
+          </a>
         </Aside>
       </>
     );

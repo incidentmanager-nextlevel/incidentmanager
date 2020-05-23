@@ -8,7 +8,9 @@ function CreateMemo({
   country,
   timedate,
   timezone,
-  crisisPotential
+  crisisPotential,
+  setContentOnLoad,
+  handleChange
 }) {
   const [memos, setMemos] = React.useState([]);
   const [error, setError] = React.useState(false);
@@ -52,12 +54,17 @@ function CreateMemo({
     //   const [key, value] = Object.entries(memoDetail);
     //   replacedMemo = replacedMemo.replace(new RegExp(key, "g"), value);
     // });
+    setContentOnLoad(replacedMemo, currentMemo.headline);
 
     return (
       <>
         <h4>{currentMemo.headline}</h4>
         <h5>{currentMemo.subline}</h5>
-        <MemoInput>{replacedMemo}</MemoInput>
+        <MemoInput
+          defaultValue={replacedMemo}
+          name="memo"
+          onChange={handleChange}
+        />
       </>
     );
   }
