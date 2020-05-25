@@ -17,11 +17,17 @@ import useFetch from "../hooks/useFetch";
 export default function IssueList() {
   // const location = useLocation();
   const [issues, setIssues] = React.useState(false);
-  const response = useFetch("/api/issues");
+  const [openTasks, setOpenTasks] = React.useState();
+  const fetchedIssues = useFetch("/api/issues");
+  const fetchedTasks = useFetch("/api/tasks");
 
   React.useEffect(() => {
-    setIssues(response.data);
-  }, [response]);
+    setIssues(fetchedIssues.data);
+    if (fetchedTasks.data !== null) {
+      const tasksArray = fetchedTasks.data;
+      setOpenTasks(tasksArray.length);
+    }
+  }, [fetchedIssues, fetchedTasks]);
 
   return (
     <>
@@ -39,7 +45,7 @@ export default function IssueList() {
               city={issue.city}
               timeDate={issue.timeDate}
               timezone={issue.timezone}
-              openTasks={issue.openTasks}
+              openTasks={openTasks}
               tasks={issue.tasks}
               crisisPotential={issue.crisisPotential}
             />

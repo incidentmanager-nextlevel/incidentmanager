@@ -7,6 +7,7 @@ const { initDb } = require("./backend/lib/db");
 const issueRoutes = require("./backend/routes/issueRoutes");
 const memoRoutes = require("./backend/routes/memoRoutes");
 const taskRoutes = require("./backend/routes/taskRoutes");
+const mailRoutes = require("./backend/routes/mailRoutes");
 
 const app = express();
 
@@ -15,7 +16,7 @@ const PORT = process.env.PORT || 7070;
 app.use(express.json({ extended: false }));
 app.use(express.urlencoded({ extended: false }));
 
-app.use("/api", issueRoutes, memoRoutes, taskRoutes);
+app.use("/api", issueRoutes, memoRoutes, taskRoutes, mailRoutes);
 
 // Serve any static files
 app.use(express.static(path.join(__dirname, "client/build")));

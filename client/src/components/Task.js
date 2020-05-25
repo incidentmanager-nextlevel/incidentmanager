@@ -9,7 +9,7 @@ import { EnlargeButton, SVGSquareButton } from "../components/Buttons";
 // import { TextEntry, DetailLink, BiggerField, TaskEntry } from "./Forms";
 import { Next, Fire, Done, Todo } from "../assets/Icons";
 import DeleteData from "../api/DeleteData";
-import { DeleteButton } from "../components/Buttons/DeleteButton";
+import { DeleteButtonText } from "../components/Buttons/DeleteButton";
 
 const IssueInfo = styled.span`
   min-width: 50px;
@@ -24,11 +24,11 @@ const TextRight = styled(IssueInfo)`
 
 const TextEntryWrapper = styled.div`
   width: 100%;
-  height: 44px;
+  height: 70px;
   border-bottom: 1px solid ${props => props.theme.colors.background};
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  flex-direction: column;
+  /* justify-content: space-between; */
   align-items: center;
   padding: 4px;
   margin: 0px;
@@ -42,6 +42,9 @@ const Input = styled.input`
 
 const Row = styled.div`
   display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
   align-items: center;
 `;
 
@@ -60,32 +63,31 @@ export default function Task({
   return (
     <>
       <TextEntryWrapper>
-        <TextLeft>
-          <label htmlFor={number}>
-            {number}.&nbsp;{taskName}
-          </label>
-        </TextLeft>
-        <Input
-          type="checkbox"
-          id={number}
-          name={number}
-          value={taskName}
-          onChange={event =>
-            onTaskStatusChange(event.target.name, event.target.checked)
-          }
-          checked={taskStatus}
-        />
         <Row>
+          <TextLeft>
+            <label htmlFor={number}>
+              {number}.&nbsp;{taskName}
+            </label>
+          </TextLeft>
+          <Input
+            type="checkbox"
+            id={number}
+            name={number}
+            value={taskName}
+            onChange={event =>
+              onTaskStatusChange(event.target.name, event.target.checked)
+            }
+            checked={taskStatus}
+          />
           <label htmlFor={number}>
             <SVGSquareButton>
               {taskStatus ? <Done /> : <Todo />}
             </SVGSquareButton>
           </label>
-
-          <DeleteButton onClick={() => handleDelete(_id)}>
-            <a></a>
-          </DeleteButton>
         </Row>
+        <DeleteButtonText onClick={() => handleDelete(_id)}>
+          <TextLeft> Delete this entry</TextLeft>
+        </DeleteButtonText>
       </TextEntryWrapper>
     </>
   );

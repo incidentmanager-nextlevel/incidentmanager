@@ -38,7 +38,6 @@ taskRoutes.post("/addtask", async (request, response) => {
 
 taskRoutes.post("/deletetask", async (request, response) => {
   try {
-    console.log(request.body._id);
     await deleteTask(request.body._id);
     response.end();
   } catch (error) {

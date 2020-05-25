@@ -32,3 +32,18 @@ export const DeleteButton = styled.div`
     }
   }
 `;
+
+export const DeleteButtonText = styled.div`
+  width: 100%;
+  text-align: left;
+  margin-bottom: 10px;
+  color: ${props => props.theme.colors.fontlighter};
+  :hover {
+    cursor: pointer;
+  }
+
+  a {
+    ::-moz-focus-inner {
+      border: 0;
+    }
+`;

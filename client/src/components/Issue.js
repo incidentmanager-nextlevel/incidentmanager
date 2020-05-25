@@ -80,7 +80,6 @@ export default function Issue({
   crisisPotential
 }) {
   const [isClicked, setIsClicked] = React.useState(false);
-
   // function ShortenDate(date) {
   // let shortenedDate = `date`;
   // shortenedDate =
@@ -148,6 +147,6 @@ Issue.propTypes = {
   country: PropTypes.string,
   timeDate: PropTypes.string,
   timezone: PropTypes.string,
-  openTasks: PropTypes.string,
+  openTasks: PropTypes.number,
   crisisPotential: PropTypes.string
 };
