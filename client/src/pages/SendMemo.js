@@ -29,12 +29,12 @@ export default function SendMemo() {
   const [emailContent, setEmailContent] = React.useState({
     headline: "",
     memo: "",
-    emailAddresses: "loreirei@web.de"
+    emailAddresses: ""
   });
 
-  const [success, setSuccess] = React.useState(true);
+  // const [success, setSuccess] = React.useState(true);
 
-  // const [error, setError] = React.useState(false);
+  const [error, setError] = React.useState(false);
   // const [loading, setLoading] = React.useState(true);
   const response = useFetch("/api/lastissue");
 
@@ -51,14 +51,26 @@ export default function SendMemo() {
   }
 
   async function handleSubmit() {
-    const response = await SendMail("/api/sendmemo", emailContent);
-    console.log("response", response);
-    if (response.status === 200) {
-      history.push("/tasks");
-    }
-    if (response.status !== 200) {
-      setSuccess(false);
-      console.error("Response statusText:", response.statusText);
+    if (emailContent.emailAddresses === "") {
+      setError(
+        <TextArea>
+          <H2Warning>Error: Please enter at least one email address</H2Warning>
+        </TextArea>
+      );
+    } else {
+      const response = await SendMail("/api/sendmemo", emailContent);
+      console.log("response", response);
+      if (response.status === 200) {
+        history.push("/tasks");
+      }
+      if (response.status !== 200) {
+        setError(
+          <TextArea>
+            <H2Warning>Error: Memo couldnt be send</H2Warning>
+          </TextArea>
+        );
+        console.error("Response statusText:", response.statusText);
+      }
     }
   }
 
@@ -73,20 +85,13 @@ export default function SendMemo() {
   }
 
   if (!issue) return "Loading...";
-  if (response.status !== 200) {
-    return `Error: Something went wrong`;
-  }
 
   if (issue) {
     const currentIssue = issue[0];
 
     return (
       <>
-        {!success && (
-          <TextArea>
-            <H2Warning>Error: Memo couldnt be send</H2Warning>
-          </TextArea>
-        )}
+        {error}
         <H2>Internal memo</H2>
         <H1>Inform the crisis management</H1>
         <TextArea>
